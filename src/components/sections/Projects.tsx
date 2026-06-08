@@ -1,177 +1,111 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
-import { PROJECTS as STATIC_PROJECTS } from '../../data';
-import { ExternalLink, Github } from 'lucide-react';
-import { db } from '../../lib/firebase';
-import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Folder, Github, ExternalLink } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.05, delayChildren: 0 }
+    transition: { staggerChildren: 0.02, delayChildren: 0 }
   }
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 15 },
   show: { 
     opacity: 1, 
     y: 0, 
-    transition: { duration: 0.3, ease: 'easeOut' } 
+    transition: { duration: 0.2, ease: 'easeOut' } 
   }
 };
 
-export default function Projects() {
-  const [projects, setProjects] = useState<any[]>(STATIC_PROJECTS);
-  const containerRef = useRef(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-  
-  const y = useTransform(scrollYProgress, [0, 1], [-100, 100]);
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  tech: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+  category: string;
+}
 
-  useEffect(() => {
-    try {
-      const q = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
-      const unsub = onSnapshot(q, (snapshot) => {
-        const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        if (data.length > 0) {
-          setProjects(data);
-        } else {
-          // Fallback to placeholder static data if no projects exist in the database
-          setProjects(STATIC_PROJECTS);
-        }
-      }, (error) => {
-        console.error("Failed to load projects from firebase", error);
-      });
-      return () => unsub();
-    } catch (err) {
-      console.error("Firebase not initialized or error", err);
-    }
-  }, []);
+const projects: Project[] = [
+  { id: '1', title: 'Cyber Security Dashboard', description: 'Advanced cybersecurity panel with real-time firewalls and telemetry visualizations.', tech: ['React', 'Node.js', 'D3.js', 'Firebase'], category: 'web', githubUrl: '#', liveUrl: '#' },
+  { id: '2', title: 'Decentralized Identity Engine', description: 'Programmatic cryptographic nodes tracking credentials with key signing paradigms.', tech: ['TypeScript', 'Solidity', 'Express'], category: 'ai', githubUrl: '#', liveUrl: '#' },
+];
+
+export default function Projects() {
+  const [activeCategory, setActiveCategory] = useState('all');
+  const filteredProjects = activeCategory === 'all' ? projects : projects.filter(p => p.category === activeCategory);
 
   return (
     <motion.section 
-      ref={containerRef}
+      id="projects"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "0px" }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.2 }}
       className="p-8 lg:p-16 border-b border-white/10 bg-[#0A0A0B] relative overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00FF41]/[0.02] to-transparent pointer-events-none scale-150"></div>
-      
       <div className="max-w-6xl mx-auto w-full relative z-10">
         <motion.div 
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: -15 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
           className="flex justify-between items-center mb-12"
         >
           <h3 className="text-sm md:text-base font-mono uppercase tracking-[0.3em] text-white font-bold flex items-center gap-4">
-            <span className="w-8 h-[1px] bg-[#00FF41]"></span>
-            Project Manifest
+            <span className="w-2 h-2 bg-[#00FF41] inline-block shadow-[0_0_8px_#00FF41]"></span>
+            System Node Registry
           </h3>
-          <span className="text-[10px] font-mono opacity-40 italic text-[#00FF41] hidden sm:block border border-[#00FF41]/20 px-2 py-0.5 rounded-sm">SORT: RECENT</span>
         </motion.div>
-      
+
+        {/* Filter Buttons */}
+        <div className="flex gap-4 mb-8 font-mono text-xs">
+          {['all', 'web', 'ai'].map(cat => (
+            <button 
+              key={cat} 
+              onClick={() => setActiveCategory(cat)}
+              className={`px-4 py-2 border transition-all cursor-pointer ${activeCategory === cat ? 'bg-[#00FF41]/10 text-[#00FF41] border-[#00FF41]/40' : 'border-white/10 text-white/50 hover:text-white'}`}
+            >
+              {cat.toUpperCase()}Registry
+            </button>
+          ))}
+        </div>
+
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "0px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-8"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-8"
         >
-        {projects.map((project, index) => (
-          <motion.div
-            key={project.id || index}
-            variants={itemVariants}
-            className="h-full relative group"
-          >
-            {/* Ambient shadow glow on hover */}
-            <div className="absolute inset-0 bg-[#00FF41]/0 group-hover:bg-[#00FF41]/10 hidden md:block blur-xl transition-all duration-300 -z-10 rounded-xl"></div>
-            
-            <div 
-              className="h-full aspect-square sm:aspect-auto border border-white/10 bg-[#121214] overflow-hidden rounded-xl group-hover:border-[#00FF41]/40 transition-colors duration-300 flex flex-col relative z-0"
-            >
-              <div 
-                className="h-[45%] sm:h-64 shrink-0 w-full relative overflow-hidden"
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project) => (
+              <motion.div
+                key={project.id}
+                variants={itemVariants}
+                layout
+                className="group border border-white/10 bg-[#121214] p-6 hover:border-[#00FF41]/40 transition-colors duration-300 rounded-xl"
               >
-                <div className="absolute inset-0 bg-[#00FF41]/5 z-10 group-hover:opacity-0 transition-opacity duration-300"></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-transparent to-transparent z-10"></div>
-                {(project as any).image ? (
-                  <motion.img 
-                    src={(project as any).image} 
-                    alt={project.title}
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="w-full h-full object-cover origin-center"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-[#1A1A1C] flex items-center justify-center opacity-30">
-                    <span className="font-mono text-xs uppercase tracking-widest text-[#00FF41]">No Asset</span>
-                  </div>
-                )}
-                
-                {/* Tech badge */}
-                <motion.div 
-                   initial={{ y: -5, opacity: 0 }}
-                   whileInView={{ y: 0, opacity: 1 }}
-                   transition={{ delay: 0.1, duration: 0.2 }}
-                  className="absolute top-2 left-2 sm:top-4 sm:left-4 z-20 px-2 sm:px-3 py-1 bg-black/80 backdrop-blur-md border border-[#00FF41]/30 rounded-full flex items-center gap-2"
-                >
-                  <span className="w-1.5 h-1.5 bg-[#00FF41] rounded-full animate-pulse"></span>
-                  <span className="font-mono text-[9px] text-[#00FF41] uppercase tracking-widest shadow-[0_0_10px_rgba(0,255,65,0.4)]">
-                    {(project.techStack || project.tech || [''])[0] || 'SYSTEM'}
-                  </span>
-                </motion.div>
-              </div>
-              
-              <div className="p-4 sm:p-8 flex flex-col flex-1 bg-gradient-to-b from-[#121214] to-[#0A0A0B]">
-                <div className="flex items-start justify-between mb-2 sm:mb-4 gap-2 sm:gap-4">
-                  <h4 className="font-bold tracking-widest text-sm sm:text-xl text-white font-display uppercase group-hover:text-[#00FF41] transition-colors">{project.title}</h4>
-                  <div className="flex items-center gap-2 sm:gap-3 shrink-0 mt-0.5 sm:mt-1">
-                    {project.githubUrl && (
-                      <a 
-                        href={project.githubUrl} 
-                        className="text-white/40 hover:text-[#00FF41] hover:-translate-y-0.5 transition-all"
-                      >
-                        <Github className="w-4 h-4 sm:w-5 sm:h-5 pointer-events-auto" />
-                      </a>
-                    )}
-                    {(project.liveDemoUrl || project.liveUrl) && (
-                      <a 
-                        href={project.liveDemoUrl || project.liveUrl} 
-                        className="text-white/40 hover:text-[#00FF41] hover:-translate-y-0.5 transition-all"
-                      >
-                        <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 pointer-events-auto" />
-                      </a>
-                    )}
+                <div className="flex justify-between items-center mb-6">
+                  <Folder className="w-8 h-8 text-[#00FF41]/80" />
+                  <div className="flex gap-3">
+                    {project.githubUrl && <a href={project.githubUrl} className="text-white/40 hover:text-[#00FF41] transition-colors"><Github className="w-5 h-5" /></a>}
+                    {project.liveUrl && <a href={project.liveUrl} className="text-white/40 hover:text-[#00FF41] transition-colors"><ExternalLink className="w-5 h-5" /></a>}
                   </div>
                 </div>
-                
-                <p className="text-white/50 text-[10px] sm:text-sm leading-relaxed mb-3 sm:mb-8 font-mono line-clamp-2 sm:line-clamp-none">
-                  {project.description}
-                </p>
-                
-                <div className="flex gap-1.5 sm:gap-2 mt-auto flex-wrap overflow-hidden sm:max-h-none" style={{ maxHeight: '24px' }}>
-                  {(project.techStack || project.tech || []).map((tech: string, i: number) => (
-                    <span 
-                      key={tech} 
-                      className="font-mono text-[8px] sm:text-[10px] text-white/60 bg-white/5 border border-white/10 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full transition-colors cursor-default uppercase tracking-wider whitespace-nowrap"
-                    >
-                      {tech}
-                    </span>
+                <h4 className="font-bold tracking-widest text-lg text-white uppercase group-hover:text-[#00FF41] transition-colors mb-2">{project.title}</h4>
+                <p className="text-sm text-white/60 font-light mb-6 leading-relaxed">{project.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.map((t, idx) => (
+                    <span key={idx} className="font-mono text-[10px] text-white/50 bg-white/5 border border-white/5 px-2.5 py-1 rounded-full">{t}</span>
                   ))}
                 </div>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </motion.div>
       </div>
     </motion.section>

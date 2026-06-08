@@ -1,0 +1,207 @@
+{
+  "entities": {
+    "AdminConfig": {
+      "title": "AdminConfig",
+      "description": "Admin users",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["Super Admin", "Admin", "Editor"] },
+        "createdAt": { "type": "number", "description": "Timestamp" }
+      },
+      "required": ["email", "role"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Portfolio settings",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "email": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "githubUsername": { "type": "string" },
+        "linkedinUrl": { "type": "string" },
+        "resumeUrl": { "type": "string" },
+        "aboutSection": { "type": "string" },
+        "seoTitle": { "type": "string" },
+        "seoDescription": { "type": "string" },
+        "updatedAt": { "type": "string", "description": "Timestamp" }
+      },
+      "required": ["name"]
+    },
+    "ContactMessage": {
+      "title": "ContactMessage",
+      "description": "Customer contact form submissions",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "subject": { "type": "string" },
+        "message": { "type": "string" },
+        "isRead": { "type": "boolean" },
+        "submissionDate": { "type": "string" }
+      },
+      "required": ["name", "email", "message", "submissionDate"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "A portfolio project",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "techStack": { "type": "array", "items": { "type": "string" } },
+        "category": { "type": "string" },
+        "githubUrl": { "type": "string" },
+        "liveDemoUrl": { "type": "string" },
+        "image": { "type": "string" },
+        "featuredStatus": { "type": "boolean" },
+        "completionDate": { "type": "string" },
+        "projectStatus": { "type": "string" },
+        "screenshots": { "type": "array", "items": { "type": "string" } },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "description": "Timestamp" },
+        "updatedAt": { "type": "string", "description": "Timestamp" }
+      },
+      "required": ["title", "description", "createdAt"]
+    },
+    "Skill": {
+      "title": "Skill",
+      "description": "A developer skill",
+      "type": "object",
+      "properties": {
+        "skillName": { "type": "string" },
+        "category": { "type": "string" },
+        "proficiencyLevel": { "type": "number" },
+        "experienceLevel": { "type": "string" },
+        "displayOrder": { "type": "number" },
+        "relatedTechnologies": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["skillName", "category", "createdAt"]
+    },
+    "Certification": {
+      "title": "Certification",
+      "description": "A certification or degree",
+      "type": "object",
+      "properties": {
+        "certificateTitle": { "type": "string" },
+        "issuingOrganization": { "type": "string" },
+        "issueDate": { "type": "string" },
+        "credentialUrl": { "type": "string" },
+        "credentialId": { "type": "string" },
+        "certificateImage": { "type": "string" },
+        "certificateCategory": { "type": "string" },
+        "verificationStatus": { "type": "boolean" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["certificateTitle", "issuingOrganization", "createdAt"]
+    },
+    "Achievement": {
+      "title": "Achievement",
+      "description": "A developer achievement",
+      "type": "object",
+      "properties": {
+        "achievementTitle": { "type": "string" },
+        "description": { "type": "string" },
+        "date": { "type": "string" },
+        "category": { "type": "string" },
+        "externalLink": { "type": "string" },
+        "badgeImage": { "type": "string" },
+        "priorityLevel": { "type": "number" },
+        "pinned": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["achievementTitle", "createdAt"]
+    },
+    "TimelineMilestone": {
+      "title": "TimelineMilestone",
+      "description": "A timeline milestone",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "date": { "type": "string" },
+        "technology": { "type": "array", "items": { "type": "string" } },
+        "category": { "type": "string" },
+        "milestoneType": { "type": "string" },
+        "order": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["title", "date", "createdAt"]
+    },
+    "AiKnowledge": {
+      "title": "AiKnowledge",
+      "description": "Custom AI knowledge chunks",
+      "type": "object",
+      "properties": {
+        "content": { "type": "string" },
+        "type": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["content", "createdAt"]
+    },
+    "BlogPost": {
+      "title": "BlogPost",
+      "description": "A blog post",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "draftMode": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["title", "content", "createdAt"]
+    }
+  },
+  "firestore": {
+    "admins/{userId}": {
+      "schema": { "$ref": "#/entities/AdminConfig" },
+      "description": "Admin configuration and roles"
+    },
+    "settings/{settingId}": {
+      "schema": { "$ref": "#/entities/Settings" },
+      "description": "Global portfolio settings"
+    },
+    "contact_messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ContactMessage" },
+      "description": "Incoming contact form messages"
+    },
+    "projects/{projectId}": {
+      "schema": { "$ref": "#/entities/Project" },
+      "description": "Collection of portfolio projects"
+    },
+    "skills/{skillId}": {
+      "schema": { "$ref": "#/entities/Skill" },
+      "description": "Collection of developer skills"
+    },
+    "certifications/{certId}": {
+      "schema": { "$ref": "#/entities/Certification" },
+      "description": "Collection of certifications"
+    },
+    "achievements/{achId}": {
+      "schema": { "$ref": "#/entities/Achievement" },
+      "description": "Collection of achievements"
+    },
+    "timeline/{timelineId}": {
+      "schema": { "$ref": "#/entities/TimelineMilestone" },
+      "description": "Collection of journey timeline milestones"
+    },
+    "ai_knowledge/{knowledgeId}": {
+      "schema": { "$ref": "#/entities/AiKnowledge" },
+      "description": "Collection of Custom AI knowledge chunks"
+    },
+    "blog_posts/{postId}": {
+      "schema": { "$ref": "#/entities/BlogPost" },
+      "description": "Collection of blog posts"
+    }
+  }
+}

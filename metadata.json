@@ -1,0 +1,8 @@
+{
+  "name": "DevPort - Tech Portfolio",
+  "description": "A dark, highly technical engineering portfolio design featuring a terminal-inspired aesthetic, monospace typography, bento-grid layouts, and elegant framer-motion reveals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

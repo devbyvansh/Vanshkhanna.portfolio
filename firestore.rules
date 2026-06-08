@@ -1,0 +1,216 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    
+    // Primitives
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() {
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        request.auth.token.email == 'vanshkhanna800@gmail.com'
+      );
+    }
+    
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    
+    // Admins Collection
+    match /admins/{adminId} {
+      allow read: if isSignedIn() && request.auth.uid == adminId || isAdmin();
+      allow write: if isSignedIn() && request.auth.token.email == 'vanshkhanna800@gmail.com';
+      allow delete: if isAdmin();
+    }
+
+    // Projects
+    function isValidProject(data) {
+      return data.keys().hasAll(['title', 'description', 'createdAt']) &&
+        data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+        data.description is string && data.description.size() > 0 && data.description.size() <= 10000 &&
+        data.createdAt is string &&
+        (!('updatedAt' in data.keys()) || data.updatedAt is string) &&
+        (!('techStack' in data.keys()) || data.techStack is list) &&
+        (!('category' in data.keys()) || data.category is string) &&
+        (!('liveDemoUrl' in data.keys()) || data.liveDemoUrl is string) &&
+        (!('githubUrl' in data.keys()) || data.githubUrl is string) &&
+        (!('image' in data.keys()) || data.image is string) &&
+        (!('featuredStatus' in data.keys()) || data.featuredStatus is bool) &&
+        (!('completionDate' in data.keys()) || data.completionDate is string) &&
+        (!('projectStatus' in data.keys()) || data.projectStatus is string) &&
+        (!('tags' in data.keys()) || (data.tags is list)) &&
+        (!('screenshots' in data.keys()) || (data.screenshots is list));
+    }
+    
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create: if isValidId(projectId) && isAdmin() && isValidProject(incoming());
+      allow update: if isValidId(projectId) && isAdmin() && isValidProject(incoming());
+      allow delete: if isValidId(projectId) && isAdmin();
+    }
+
+    // Skills
+    function isValidSkill(data) {
+      return data.keys().hasAll(['skillName', 'category', 'createdAt'])
+        && data.skillName is string && data.skillName.size() <= 100
+        && data.category is string && data.category.size() <= 100
+        && data.createdAt is string
+        && (!('proficiencyLevel' in data.keys()) || data.proficiencyLevel is number)
+        && (!('experienceLevel' in data.keys()) || data.experienceLevel is string)
+        && (!('displayOrder' in data.keys()) || data.displayOrder is number)
+        && (!('relatedTechnologies' in data.keys()) || data.relatedTechnologies is list)
+        && (!('updatedAt' in data.keys()) || data.updatedAt is string);
+    }
+    match /skills/{skillId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidSkill(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // Certifications
+    function isValidCertification(data) {
+      return data.keys().hasAll(['certificateTitle', 'issuingOrganization', 'createdAt'])
+        && data.certificateTitle is string && data.certificateTitle.size() <= 200
+        && data.issuingOrganization is string && data.issuingOrganization.size() <= 200
+        && data.createdAt is string
+        && (!('issueDate' in data.keys()) || data.issueDate is string)
+        && (!('credentialUrl' in data.keys()) || data.credentialUrl is string)
+        && (!('credentialId' in data.keys()) || data.credentialId is string)
+        && (!('certificateImage' in data.keys()) || data.certificateImage is string)
+        && (!('certificateCategory' in data.keys()) || data.certificateCategory is string)
+        && (!('verificationStatus' in data.keys()) || data.verificationStatus is bool)
+        && (!('description' in data.keys()) || data.description is string)
+        && (!('updatedAt' in data.keys()) || data.updatedAt is string);
+    }
+    match /certifications/{certId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidCertification(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // Achievements
+    function isValidAchievement(data) {
+      return data.keys().hasAll(['achievementTitle', 'createdAt'])
+        && data.achievementTitle is string && data.achievementTitle.size() <= 200
+        && data.createdAt is string
+        && (!('description' in data.keys()) || data.description is string)
+        && (!('date' in data.keys()) || data.date is string)
+        && (!('category' in data.keys()) || data.category is string)
+        && (!('externalLink' in data.keys()) || data.externalLink is string)
+        && (!('badgeImage' in data.keys()) || data.badgeImage is string)
+        && (!('priorityLevel' in data.keys()) || data.priorityLevel is number)
+        && (!('pinned' in data.keys()) || data.pinned is bool)
+        && (!('updatedAt' in data.keys()) || data.updatedAt is string);
+    }
+    match /achievements/{achId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidAchievement(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // TimelineMilestone
+    function isValidTimelineMilestone(data) {
+      return data.keys().hasAll(['title', 'year', 'createdAt'])
+        && data.title is string && data.title.size() <= 200
+        && data.year is string && data.year.size() <= 50
+        && data.createdAt is string
+        && (!('description' in data.keys()) || data.description is string)
+        && (!('technology' in data.keys()) || data.technology is list)
+        && (!('category' in data.keys()) || data.category is string)
+        && (!('milestoneType' in data.keys()) || data.milestoneType is string)
+        && (!('order' in data.keys()) || data.order is number)
+        && (!('updatedAt' in data.keys()) || data.updatedAt is string);
+    }
+    match /timeline/{timelineId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidTimelineMilestone(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // Settings
+    function isValidSettings(data) {
+      return data.keys().hasAll(['name'])
+        && data.name is string && data.name.size() <= 100
+        && (!('role' in data.keys()) || data.role is string)
+        && (!('email' in data.keys()) || data.email is string)
+        && (!('phoneNumber' in data.keys()) || data.phoneNumber is string)
+        && (!('githubUsername' in data.keys()) || data.githubUsername is string)
+        && (!('linkedinUrl' in data.keys()) || data.linkedinUrl is string)
+        && (!('resumeUrl' in data.keys()) || data.resumeUrl is string)
+        && (!('cvUrl' in data.keys()) || data.cvUrl is string)
+        && (!('aboutSection' in data.keys()) || data.aboutSection is string)
+        && (!('seoTitle' in data.keys()) || data.seoTitle is string)
+        && (!('seoDescription' in data.keys()) || data.seoDescription is string)
+        && (!('updatedAt' in data.keys()) || data.updatedAt is string);
+    }
+    match /settings/{settingId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidSettings(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // AiKnowledge
+    function isValidAiKnowledge(data) {
+      return data.keys().hasAll(['content', 'createdAt'])
+        && data.content is string && data.content.size() <= 100000
+        && data.createdAt is string
+        && (!('type' in data.keys()) || data.type is string)
+        && (!('updatedAt' in data.keys()) || data.updatedAt is string);
+    }
+    match /ai_knowledge/{knowledgeId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidAiKnowledge(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // BlogPost
+    function isValidBlogPost(data) {
+      return data.keys().hasAll(['title', 'content', 'createdAt'])
+        && data.title is string && data.title.size() <= 200
+        && data.content is string && data.content.size() <= 500000
+        && data.createdAt is string
+        && (!('draftMode' in data.keys()) || data.draftMode is bool)
+        && (!('updatedAt' in data.keys()) || data.updatedAt is string);
+    }
+    match /blog_posts/{postId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidBlogPost(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // Media Files
+    function isValidMediaFile(data) {
+      return data.keys().hasAll(['name', 'url', 'type', 'createdAt'])
+        && data.name is string && data.name.size() <= 200
+        && data.url is string && data.url.size() <= 1000
+        && data.type is string
+        && data.createdAt is string;
+    }
+    match /media_files/{mediaId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidMediaFile(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // ContactMessage
+    function isValidContactMessage(data) {
+      return data.keys().hasAll(['name', 'email', 'message', 'submissionDate'])
+        && data.name is string && data.name.size() <= 100
+        && data.email is string && data.email.size() <= 100
+        && data.message is string && data.message.size() <= 10000
+        && data.submissionDate is string
+        && (!('subject' in data.keys()) || data.subject is string)
+        && (!('isRead' in data.keys()) || data.isRead is bool);
+    }
+    match /contact_messages/{messageId} {
+      allow read: if isAdmin();
+      allow create: if isValidContactMessage(incoming());
+      allow update, delete: if isAdmin();
+    }
+  }
+}

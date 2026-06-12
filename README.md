@@ -13,3 +13,5 @@ AI Engineer passionate about **Generative AI, Machine Learning, Deep Learning, N
     <img src="https://img.shields.io/badge/LinkedIn-Vansh%20Khanna-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
   </a>
 </p>
+
+Update on 12 June 2026

@@ -45,7 +45,7 @@ export default function Projects() {
       transition={{ duration: 0.3 }}
       className="p-8 lg:p-16 border-b border-white/10 bg-[#0A0A0B] relative overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00FF41]/[0.02] to-transparent pointer-events-none scale-150"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent pointer-events-none scale-150"></div>
       
       <div className="max-w-6xl mx-auto w-full relative z-10">
         <motion.div 
@@ -56,10 +56,10 @@ export default function Projects() {
           className="flex justify-between items-center mb-12"
         >
           <h3 className="text-sm md:text-base font-mono uppercase tracking-[0.3em] text-white font-bold flex items-center gap-4">
-            <span className="w-8 h-[1px] bg-[#00FF41]"></span>
+            <span className="w-8 h-[1px] bg-white"></span>
             Project Manifest
           </h3>
-          <span className="text-[10px] font-mono opacity-40 italic text-[#00FF41] hidden sm:block border border-[#00FF41]/20 px-2 py-0.5 rounded-sm">SORT: RECENT</span>
+          <span className="text-[10px] font-mono opacity-40 italic text-white hidden sm:block border border-white/20 px-2 py-0.5 rounded-sm">SORT: RECENT</span>
         </motion.div>
       
         <div 
@@ -75,15 +75,15 @@ export default function Projects() {
             className="h-full relative group"
           >
             {/* Ambient shadow glow on hover */}
-            <div className="absolute inset-0 bg-[#00FF41]/0 group-hover:bg-[#00FF41]/10 hidden md:block blur-xl transition-all duration-300 -z-10 rounded-xl"></div>
+            <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 hidden md:block blur-xl transition-all duration-300 -z-10 rounded-xl"></div>
             
             <div 
-              className="h-full aspect-square sm:aspect-auto border border-white/10 bg-[#121214] overflow-hidden rounded-xl group-hover:border-[#00FF41]/40 transition-colors duration-300 flex flex-col relative z-0"
+              className="h-full aspect-square sm:aspect-auto border border-white/10 bg-[#121214] overflow-hidden rounded-xl group-hover:border-white/40 transition-colors duration-300 flex flex-col relative z-0"
             >
               <div 
                 className="h-[45%] sm:h-64 shrink-0 w-full relative overflow-hidden"
               >
-                <div className="absolute inset-0 bg-[#00FF41]/5 z-10 group-hover:opacity-0 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-white/5 z-10 group-hover:opacity-0 transition-opacity duration-300"></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-transparent to-transparent z-10"></div>
                 {(project as any).image ? (
                   <motion.img 
@@ -95,7 +95,7 @@ export default function Projects() {
                   />
                 ) : (
                   <div className="w-full h-full bg-[#1A1A1C] flex items-center justify-center opacity-30">
-                    <span className="font-mono text-xs uppercase tracking-widest text-[#00FF41]">No Asset</span>
+                    <span className="font-mono text-xs uppercase tracking-widest text-white">No Asset</span>
                   </div>
                 )}
                 
@@ -104,10 +104,10 @@ export default function Projects() {
                    initial={{ y: -5, opacity: 0 }}
                    whileInView={{ y: 0, opacity: 1 }}
                    transition={{ delay: 0.1, duration: 0.2 }}
-                  className="absolute top-2 left-2 sm:top-4 sm:left-4 z-20 px-2 sm:px-3 py-1 bg-black/80 backdrop-blur-md border border-[#00FF41]/30 rounded-full flex items-center gap-2"
+                  className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 px-2 sm:px-3 py-1 bg-black/80 backdrop-blur-md border border-white/30 rounded-full flex items-center gap-2"
                 >
-                  <span className="w-1.5 h-1.5 bg-[#00FF41] rounded-full animate-pulse"></span>
-                  <span className="font-mono text-[9px] text-[#00FF41] uppercase tracking-widest shadow-[0_0_10px_rgba(0,255,65,0.4)]">
+                  <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
+                  <span className="font-mono text-[9px] text-white uppercase tracking-widest">
                     {(project.techStack || project.tech || [''])[0] || 'SYSTEM'}
                   </span>
                 </motion.div>
@@ -115,12 +115,12 @@ export default function Projects() {
               
               <div className="p-4 sm:p-8 flex flex-col flex-1 bg-gradient-to-b from-[#121214] to-[#0A0A0B]">
                 <div className="flex items-start justify-between mb-2 sm:mb-4 gap-2 sm:gap-4">
-                  <h4 className="font-bold tracking-widest text-sm sm:text-xl text-white font-display uppercase group-hover:text-[#00FF41] transition-colors">{project.title}</h4>
+                  <h4 className="font-medium tracking-tight text-base sm:text-xl text-white font-display group-hover:text-white transition-colors">{project.title}</h4>
                   <div className="flex items-center gap-2 sm:gap-3 shrink-0 mt-0.5 sm:mt-1">
                     {project.githubUrl && (
                       <a 
                         href={project.githubUrl} 
-                        className="text-white/40 hover:text-[#00FF41] hover:-translate-y-0.5 transition-all"
+                        className="text-white/40 hover:text-white hover:-translate-y-0.5 transition-all"
                       >
                         <Github className="w-4 h-4 sm:w-5 sm:h-5 pointer-events-auto" />
                       </a>
@@ -128,7 +128,7 @@ export default function Projects() {
                     {(project.liveDemoUrl || project.liveUrl) && (
                       <a 
                         href={project.liveDemoUrl || project.liveUrl} 
-                        className="text-white/40 hover:text-[#00FF41] hover:-translate-y-0.5 transition-all"
+                        className="text-white/40 hover:text-white hover:-translate-y-0.5 transition-all"
                       >
                         <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 pointer-events-auto" />
                       </a>
@@ -136,7 +136,7 @@ export default function Projects() {
                   </div>
                 </div>
                 
-                <p className="text-white/50 text-[10px] sm:text-sm leading-relaxed mb-3 sm:mb-8 font-mono line-clamp-2 sm:line-clamp-none">
+                <p className="text-white/60 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-8 font-sans line-clamp-2 sm:line-clamp-none">
                   {project.description}
                 </p>
                 
@@ -146,7 +146,7 @@ export default function Projects() {
                     {(project.tags || project.techStack || project.tech || []).map((tech: string, i: number) => (
                       <span 
                         key={tech} 
-                        className="font-mono text-[10px] text-white/70 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full transition-colors cursor-default uppercase tracking-wider whitespace-nowrap hover:border-[#00FF41]/30 hover:text-[#00FF41]"
+                        className="font-mono text-[10px] text-white/70 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full transition-colors cursor-default uppercase tracking-wider whitespace-nowrap hover:border-white/30 hover:text-white"
                       >
                         {tech}
                       </span>

@@ -69,22 +69,22 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0A0A0B] text-[#E0E0E0] font-sans flex selection:bg-[#00FF41]/30 selection:text-emerald-200 w-full relative">
+    <div className="min-h-screen bg-[#0A0A0B] text-[#E0E0E0] font-sans flex selection:bg-[#ffffff]/30 selection:text-white w-full relative">
       {/* Left Control Rail */}
       <aside 
         className="w-16 border-r border-white/10 hidden xl:flex flex-col items-center py-8 gap-12 bg-[#0D0D0E] shrink-0 fixed inset-y-0 left-0 z-50"
       >
-        <div className="w-8 h-8 border-2 border-[#00FF41] flex items-center justify-center font-bold text-xs italic text-white">VK</div>
+        <div className="w-8 h-8 border-2 border-[#ffffff] flex items-center justify-center font-bold text-xs italic text-white">VK</div>
         <nav className="flex flex-col gap-8 relative">
           <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[1px] bg-white/5 -z-10"></div>
-          <button onClick={() => scrollTo('hero')} className={`relative flex items-center justify-center w-4 h-4 transition-all duration-300 ${activeSection === 'hero' ? 'bg-[#00FF41] shadow-[0_0_15px_rgba(0,255,65,0.8)] scale-125' : 'bg-white opacity-40 hover:opacity-100 hover:bg-[#00FF41] hover:scale-110'}`} title="Home (H)">
+          <button onClick={() => scrollTo('hero')} className={`relative flex items-center justify-center w-4 h-4 transition-all duration-300 ${activeSection === 'hero' ? 'bg-[#ffffff] shadow-[0_0_15px_rgba(255,255,255,0.5)] scale-125' : 'bg-white opacity-40 hover:opacity-100 hover:bg-[#ffffff] hover:scale-110'}`} title="Home (H)">
             {activeSection === 'hero' && <span className="absolute w-1.5 h-1.5 bg-white rounded-full animate-pulse shadow-[0_0_5px_#fff]"></span>}
           </button>
-          <button onClick={() => scrollTo('projects')} className={`relative flex items-center justify-center w-4 h-4 border-2 transition-all duration-300 rotate-45 ${activeSection === 'projects' ? 'border-[#00FF41] bg-[#00FF41]/20 shadow-[0_0_15px_rgba(0,255,65,0.6)] scale-125' : 'border-white bg-transparent opacity-40 hover:opacity-100 hover:border-[#00FF41] hover:scale-110'}`} title="Projects (P)">
-            {activeSection === 'projects' && <span className="absolute w-1.5 h-1.5 bg-[#00FF41] rounded-full animate-pulse blur-[1px]"></span>}
+          <button onClick={() => scrollTo('projects')} className={`relative flex items-center justify-center w-4 h-4 border-2 transition-all duration-300 rotate-45 ${activeSection === 'projects' ? 'border-[#ffffff] bg-[#ffffff]/20 shadow-[0_0_15px_rgba(255,255,255,0.3)] scale-125' : 'border-white bg-transparent opacity-40 hover:opacity-100 hover:border-[#ffffff] hover:scale-110'}`} title="Projects (P)">
+            {activeSection === 'projects' && <span className="absolute w-1.5 h-1.5 bg-[#ffffff] rounded-full animate-pulse blur-[1px]"></span>}
           </button>
-          <button onClick={() => scrollTo('journey')} className={`relative flex items-center justify-center w-4 h-4 rounded-full border-2 transition-all duration-300 ${activeSection === 'journey' ? 'border-[#00FF41] bg-[#00FF41]/20 shadow-[0_0_15px_rgba(0,255,65,0.6)] scale-125' : 'border-white bg-transparent opacity-40 hover:opacity-100 hover:border-[#00FF41] hover:scale-110'}`} title="Journey (J)">
-            {activeSection === 'journey' && <span className="absolute w-1.5 h-1.5 bg-[#00FF41] rounded-full animate-pulse blur-[1px]"></span>}
+          <button onClick={() => scrollTo('journey')} className={`relative flex items-center justify-center w-4 h-4 rounded-full border-2 transition-all duration-300 ${activeSection === 'journey' ? 'border-[#ffffff] bg-[#ffffff]/20 shadow-[0_0_15px_rgba(255,255,255,0.3)] scale-125' : 'border-white bg-transparent opacity-40 hover:opacity-100 hover:border-[#ffffff] hover:scale-110'}`} title="Journey (J)">
+            {activeSection === 'journey' && <span className="absolute w-1.5 h-1.5 bg-[#ffffff] rounded-full animate-pulse blur-[1px]"></span>}
           </button>
           <button onClick={() => setIsCertificationsOpen(true)} className={`relative flex items-center justify-center transition-all duration-300 ${isCertificationsOpen ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.6)] scale-110' : 'text-white/40 hover:text-white hover:scale-110'}`} title="Certifications (C)">
             <svg width="14" height="18" viewBox="0 0 14 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 2H3C2.44772 2 2 2.44772 2 3V15C2 15.5523 2.44772 16 3 16H11C11.5523 16 12 15.5523 12 15V5L9 2Z"/><path d="M8 2V5H12"/></svg>

@@ -24,6 +24,7 @@ export default function Projects() {
         if (data.length > 0) {
           setProjects(data);
         } else {
+          // Fallback to placeholder static data if no projects exist in the database
           setProjects(STATIC_PROJECTS);
         }
       }, (error) => {
@@ -61,87 +62,91 @@ export default function Projects() {
           <span className="text-[10px] font-mono opacity-40 italic text-[#00FF41] hidden sm:block border border-[#00FF41]/20 px-2 py-0.5 rounded-sm">SORT: RECENT</span>
         </motion.div>
       
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-8">
-        <AnimatePresence mode="popLayout">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id || index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: index * 0.05, ease: 'easeOut' }}
-              className="h-full relative group"
+        <div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-8"
+        >
+        {projects.map((project, index) => (
+          <motion.div
+            key={project.id || index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.3, delay: index * 0.1, ease: 'easeOut' }}
+            className="h-full relative group"
+          >
+            {/* Ambient shadow glow on hover */}
+            <div className="absolute inset-0 bg-[#00FF41]/0 group-hover:bg-[#00FF41]/10 hidden md:block blur-xl transition-all duration-300 -z-10 rounded-xl"></div>
+            
+            <div 
+              className="h-full aspect-square sm:aspect-auto border border-white/10 bg-[#121214] overflow-hidden rounded-xl group-hover:border-[#00FF41]/40 transition-colors duration-300 flex flex-col relative z-0"
             >
-              <div className="absolute inset-0 bg-[#00FF41]/0 group-hover:bg-[#00FF41]/10 hidden md:block blur-xl transition-all duration-300 -z-10 rounded-xl"></div>
-              
               <div 
-                className="h-full aspect-square sm:aspect-auto border border-white/10 bg-[#121214] overflow-hidden rounded-xl group-hover:border-[#00FF41]/40 transition-colors duration-300 flex flex-col relative z-0"
+                className="h-[45%] sm:h-64 shrink-0 w-full relative overflow-hidden"
               >
-                <div 
-                  className="h-[45%] sm:h-64 shrink-0 w-full relative overflow-hidden"
+                <div className="absolute inset-0 bg-[#00FF41]/5 z-10 group-hover:opacity-0 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-transparent to-transparent z-10"></div>
+                {(project as any).image ? (
+                  <motion.img 
+                    src={(project as any).image} 
+                    alt={project.title}
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
+                    className="w-full h-full object-cover origin-center"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#1A1A1C] flex items-center justify-center opacity-30">
+                    <span className="font-mono text-xs uppercase tracking-widest text-[#00FF41]">No Asset</span>
+                  </div>
+                )}
+                
+                {/* Tech badge */}
+                <motion.div 
+                   initial={{ y: -5, opacity: 0 }}
+                   whileInView={{ y: 0, opacity: 1 }}
+                   transition={{ delay: 0.1, duration: 0.2 }}
+                  className="absolute top-2 left-2 sm:top-4 sm:left-4 z-20 px-2 sm:px-3 py-1 bg-black/80 backdrop-blur-md border border-[#00FF41]/30 rounded-full flex items-center gap-2"
                 >
-                  <div className="absolute inset-0 bg-[#00FF41]/5 z-10 group-hover:opacity-0 transition-opacity duration-300"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-transparent to-transparent z-10"></div>
-                  {(project as any).image ? (
-                    <motion.img 
-                      src={(project as any).image} 
-                      alt={project.title}
-                      whileHover={{ scale: 1.02 }}
-                      transition={{ duration: 0.2, ease: "easeOut" }}
-                      className="w-full h-full object-cover origin-center"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-[#1A1A1C] flex items-center justify-center opacity-30">
-                      <span className="font-mono text-xs uppercase tracking-widest text-[#00FF41]">No Asset</span>
-                    </div>
-                  )}
-                  
-                  <motion.div 
-                     initial={{ y: -5, opacity: 0 }}
-                     whileInView={{ y: 0, opacity: 1 }}
-                     transition={{ delay: 0.1, duration: 0.2 }}
-                    className="absolute top-2 left-2 sm:top-4 sm:left-4 z-20 px-2 sm:px-3 py-1 bg-black/80 backdrop-blur-md border border-[#00FF41]/30 rounded-full flex items-center gap-2"
-                  >
-                    <span className="w-1.5 h-1.5 bg-[#00FF41] rounded-full animate-pulse"></span>
-                    <span className="font-mono text-[9px] text-[#00FF41] uppercase tracking-widest shadow-[0_0_10px_rgba(0,255,65,0.4)]">
-                      {(project.techStack || project.tech || [''])[0] || 'SYSTEM'}
-                    </span>
-                  </motion.div>
+                  <span className="w-1.5 h-1.5 bg-[#00FF41] rounded-full animate-pulse"></span>
+                  <span className="font-mono text-[9px] text-[#00FF41] uppercase tracking-widest shadow-[0_0_10px_rgba(0,255,65,0.4)]">
+                    {(project.techStack || project.tech || [''])[0] || 'SYSTEM'}
+                  </span>
+                </motion.div>
+              </div>
+              
+              <div className="p-4 sm:p-8 flex flex-col flex-1 bg-gradient-to-b from-[#121214] to-[#0A0A0B]">
+                <div className="flex items-start justify-between mb-2 sm:mb-4 gap-2 sm:gap-4">
+                  <h4 className="font-bold tracking-widest text-sm sm:text-xl text-white font-display uppercase group-hover:text-[#00FF41] transition-colors">{project.title}</h4>
+                  <div className="flex items-center gap-2 sm:gap-3 shrink-0 mt-0.5 sm:mt-1">
+                    {project.githubUrl && (
+                      <a 
+                        href={project.githubUrl} 
+                        className="text-white/40 hover:text-[#00FF41] hover:-translate-y-0.5 transition-all"
+                      >
+                        <Github className="w-4 h-4 sm:w-5 sm:h-5 pointer-events-auto" />
+                      </a>
+                    )}
+                    {(project.liveDemoUrl || project.liveUrl) && (
+                      <a 
+                        href={project.liveDemoUrl || project.liveUrl} 
+                        className="text-white/40 hover:text-[#00FF41] hover:-translate-y-0.5 transition-all"
+                      >
+                        <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 pointer-events-auto" />
+                      </a>
+                    )}
+                  </div>
                 </div>
                 
-                <div className="p-4 sm:p-8 flex flex-col flex-1 bg-gradient-to-b from-[#121214] to-[#0A0A0B]">
-                  <div className="flex items-start justify-between mb-2 sm:mb-4 gap-2 sm:gap-4">
-                    <h4 className="font-bold tracking-widest text-sm sm:text-xl text-white font-display uppercase group-hover:text-[#00FF41] transition-colors">{project.title}</h4>
-                    <div className="flex items-center gap-2 sm:gap-3 shrink-0 mt-0.5 sm:mt-1">
-                      {project.githubUrl && (
-                        <a 
-                          href={project.githubUrl} 
-                          className="text-white/40 hover:text-[#00FF41] hover:-translate-y-0.5 transition-all"
-                        >
-                          <Github className="w-4 h-4 sm:w-5 sm:h-5 pointer-events-auto" />
-                        </a>
-                      )}
-                      {(project.liveDemoUrl || project.liveUrl) && (
-                        <a 
-                          href={project.liveDemoUrl || project.liveUrl} 
-                          className="text-white/40 hover:text-[#00FF41] hover:-translate-y-0.5 transition-all"
-                        >
-                          <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 pointer-events-auto" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                  
-                  <p className="text-white/50 text-[10px] sm:text-sm leading-relaxed mb-3 sm:mb-8 font-mono line-clamp-2 sm:line-clamp-none">
-                    {project.description}
-                  </p>
-                  
-                  <div className="flex gap-1.5 sm:gap-2 mt-auto flex-wrap overflow-hidden sm:max-h-none" style={{ maxHeight: '24px' }}>
-                    {(project.techStack || project.tech || []).map((tech: string, i: number) => (
+                <p className="text-white/50 text-[10px] sm:text-sm leading-relaxed mb-3 sm:mb-8 font-mono line-clamp-2 sm:line-clamp-none">
+                  {project.description}
+                </p>
+                
+                <div className="mt-auto pt-4 flex flex-col gap-2">
+                  <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Tech stack:</span>
+                  <div className="flex gap-2 flex-wrap">
+                    {(project.tags || project.techStack || project.tech || []).map((tech: string, i: number) => (
                       <span 
                         key={tech} 
-                        className="font-mono text-[8px] sm:text-[10px] text-white/60 bg-white/5 border border-white/10 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full transition-colors cursor-default uppercase tracking-wider whitespace-nowrap"
+                        className="font-mono text-[10px] text-white/70 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full transition-colors cursor-default uppercase tracking-wider whitespace-nowrap hover:border-[#00FF41]/30 hover:text-[#00FF41]"
                       >
                         {tech}
                       </span>
@@ -149,9 +154,9 @@ export default function Projects() {
                   </div>
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+            </div>
+          </motion.div>
+        ))}
         </div>
       </div>
     </motion.section>

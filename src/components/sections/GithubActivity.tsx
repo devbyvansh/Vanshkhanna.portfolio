@@ -28,9 +28,9 @@ export default function GithubActivity() {
       className="p-8 lg:p-16 border-b border-white/10 bg-[#0A0A0B] relative overflow-hidden"
     >
       <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-[#00FF41]/10 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-white/10 to-transparent rounded-full blur-3xl"></div>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00FF41]/[0.01] to-transparent pointer-events-none z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#ffffff]/[0.01] to-transparent pointer-events-none z-0"></div>
 
       <div className="max-w-6xl mx-auto w-full relative z-10">
         <motion.div 
@@ -41,7 +41,7 @@ export default function GithubActivity() {
           className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4"
         >
           <h3 className="text-sm md:text-base font-mono uppercase tracking-[0.3em] font-bold text-white flex items-center gap-4">
-            <span className="w-8 h-[1px] bg-[#00FF41]"></span>
+            <span className="w-8 h-[1px] bg-white"></span>
             GitHub Activity
           </h3>
           
@@ -52,14 +52,14 @@ export default function GithubActivity() {
                 onClick={() => setSelectedYear(year)}
                 className={`px-3 py-1 text-xs font-mono transition-all duration-300 border ${
                   selectedYear === year 
-                    ? 'border-[#00FF41] text-[#00FF41] bg-[#00FF41]/10 shadow-[0_0_10px_rgba(0,255,65,0.2)]' 
+                    ? 'border-white/30 text-white bg-white/10 shadow-none' 
                     : 'border-white/10 text-white/40 hover:text-white hover:border-white/30 bg-transparent'
                 }`}
               >
                 {year}
               </button>
             ))}
-            <span className="text-[10px] font-mono opacity-40 italic text-[#00FF41] ml-4 hidden md:block border border-[#00FF41]/20 px-2 py-0.5 rounded-sm">SYS_LOG: CONTRIBUTIONS</span>
+            <span className="text-[10px] font-mono opacity-40 italic text-white ml-4 hidden md:block border border-white/20 px-2 py-0.5 rounded-sm">SYS_LOG: CONTRIBUTIONS</span>
           </div>
         </motion.div>
 
@@ -71,8 +71,10 @@ export default function GithubActivity() {
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="w-full flex items-center justify-center p-8 border border-white/10 bg-[#121214] rounded-xl relative group min-h-[220px]"
         >
-          <div className="absolute inset-0 bg-[#00FF41]/0 group-hover:bg-[#00FF41]/10 blur-xl transition-all duration-700 pointer-events-none -z-10 rounded-xl"></div>
-          <div className="absolute inset-0 bg-[#00FF41]/5 pointer-events-none z-0 rounded-xl group-hover:opacity-0 transition-opacity duration-700"></div>
+          {/* Ambient Glow */}
+          <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 blur-xl transition-all duration-700 pointer-events-none -z-10 rounded-xl"></div>
+          
+          <div className="absolute inset-0 bg-white/5 pointer-events-none z-0 rounded-xl group-hover:opacity-0 transition-opacity duration-700"></div>
           
           <div className="relative z-10 w-full overflow-x-auto scrollbar-hide flex justify-center py-4">
             <ErrorBoundary fallback={
@@ -97,8 +99,8 @@ export default function GithubActivity() {
                   return data;
                 }}
                 theme={{
-                  light: ['#1a1a1c', '#004411', '#008822', '#00cc33', '#00FF41'],
-                  dark: ['#1a1a1c', '#004411', '#008822', '#00cc33', '#00FF41']
+                  light: ['#1a1a1c', '#333333', '#666666', '#999999', '#ffffff'],
+                  dark: ['#1a1a1c', '#333333', '#666666', '#999999', '#ffffff']
                 }}
                 fontSize={14}
                 blockSize={14}
@@ -115,13 +117,13 @@ export default function GithubActivity() {
               delayShow={50}
               style={{ 
                 backgroundColor: '#121214', 
-                color: '#00FF41', 
-                border: '1px solid rgba(0, 255, 65, 0.3)', 
+                color: '#ffffff', 
+                border: '1px solid rgba(255, 255, 255, 0.3)', 
                 fontSize: '11px', 
                 fontFamily: 'monospace',
                 borderRadius: '8px',
                 zIndex: 100,
-                boxShadow: '0 4px 15px rgba(0, 255, 65, 0.1)'
+                boxShadow: '0 4px 15px rgba(255, 255, 255, 0.1)'
               }} 
             />
           </div>

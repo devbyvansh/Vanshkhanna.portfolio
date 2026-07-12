@@ -105,67 +105,63 @@ export default function Hero() {
            variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="relative z-10 lg:w-3/5 flex-shrink-0"
+          className="relative z-10 lg:w-1/2 flex-shrink-0"
         >
-          <motion.div variants={itemVariants} className="flex items-center gap-2 mb-4 text-[#00FF41]">
-            <div className="h-[1px] w-8 bg-[#00FF41]"></div>
-            <span className="text-[10px] font-mono tracking-[0.5em]">CORE_DIRECTIVE</span>
-            <span className="text-[10px] font-mono opacity-60 ml-2 border border-[#00FF41]/30 px-2 py-0.5 rounded-sm bg-[#00FF41]/5 backdrop-blur-sm">SYS.STATUS: {userInfo.status}</span>
+          {/* Top: SYSTEM INITIALIZED */}
+          <motion.div variants={itemVariants} className="flex items-center gap-3 mb-12">
+            <div className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+            </div>
+            <span className="text-xs font-mono tracking-[0.2em] text-white/50 uppercase">System Initialized</span>
           </motion.div>
           
-          <motion.h1 variants={itemVariants} className="text-3xl sm:text-6xl md:text-7xl xl:text-[90px] font-display font-black leading-[0.85] tracking-tighter mb-8 text-white mt-8 uppercase w-full">
-            <span className="block text-2xl sm:text-5xl md:text-6xl xl:text-[60px] text-white/90 tracking-tight mb-2">
-              HI, I AM
-            </span>
-            <motion.div variants={titleContainerVariants} className="flex flex-nowrap whitespace-nowrap text-transparent overflow-hidden" style={{ WebkitTextStroke: '1px #fff' }}>
-              {Array.from(nameInput).map((char, index) => (
-                <motion.span
-                  key={index}
-                  variants={charVariants}
-                  className={char === " " ? "w-3 sm:w-5 md:w-8" : "inline-block drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"}
-                  style={{ opacity: 0.9 }}
-                >
-                  {char}
-                </motion.span>
-              ))}
-            </motion.div>
-          </motion.h1>
-
-          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 font-mono text-xs sm:text-sm mb-8 text-white/60">
-            <div className="flex items-center gap-2 border border-white/10 bg-white/5 py-1.5 px-3 rounded-sm backdrop-blur-sm">
-              <MapPin className="w-3 h-3 text-[#00FF41]" />
-              <span>LOC: {userInfo.location}</span>
+          {/* Terminal Layout with Clean Premium Typography */}
+          <motion.div variants={itemVariants} className="space-y-8 font-sans">
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em]">User</span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display tracking-tight text-white font-medium">{userInfo.name}</h1>
             </div>
-            <div className="flex items-center gap-2 border border-white/10 bg-white/5 py-1.5 px-3 rounded-sm backdrop-blur-sm">
-              <FileCode2 className="w-3 h-3 text-[#00FF41]" />
-              <span>ROLE: {userInfo.role}</span>
+            
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em]">Role</span>
+              <h2 className="text-2xl sm:text-3xl font-display tracking-tight text-white/80">{userInfo.role}</h2>
+            </div>
+            
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em]">Status</span>
+              <div className="flex items-center gap-3">
+                <div className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </div>
+                <span className="text-lg font-mono tracking-tight text-white/80 uppercase">{userInfo.status || "ONLINE"}</span>
+              </div>
+            </div>
+            
+            <div className="flex flex-col gap-3 max-w-md pt-4">
+              <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em]">Mission</span>
+              <p className="text-lg font-light text-white/70 leading-relaxed font-sans">
+                {userInfo.intro}
+                <motion.span 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: [1, 0] }}
+                  transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                  className="inline-block w-1.5 h-5 bg-white/70 ml-2 align-middle"
+                />
+              </p>
             </div>
           </motion.div>
 
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-            className="mt-8 text-sm md:text-lg font-light max-w-md text-white/70 leading-relaxed min-h-[80px]"
-          >
-            {userInfo.intro}
-            <motion.span 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [1, 0] }}
-              transition={{ duration: 0.8, repeat: Infinity, ease: "linear", delay: 1 }}
-              className="inline-block w-[0.5em] h-[1em] bg-[#00FF41] ml-1 align-middle"
-            />
-          </motion.p>
-
-          <motion.div variants={itemVariants} className="flex flex-wrap gap-4 mt-8">
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-4 mt-12">
             <a 
               href={(userInfo as any).resumeUrl && (userInfo as any).resumeUrl !== '#' ? (userInfo as any).resumeUrl : "#"} 
               target={(userInfo as any).resumeUrl && (userInfo as any).resumeUrl !== '#' && !(userInfo as any).resumeUrl.startsWith('data:') ? "_blank" : "_self"}
               onClick={(e) => handleViewDocument(e, (userInfo as any).resumeUrl)}
               rel="noopener noreferrer"
-              className="px-6 py-2.5 bg-[#00FF41]/5 border border-[#00FF41]/30 text-[#00FF41] hover:bg-[#00FF41]/10 font-mono text-sm uppercase tracking-widest transition-all duration-300 backdrop-blur-sm flex items-center gap-2 group cursor-pointer"
+              className="px-6 py-3 bg-white text-black hover:bg-white/90 font-medium text-sm transition-all rounded-full flex items-center gap-2 group"
             >
-              <FileText className="w-4 h-4 group-hover:scale-110 transition-transform" />
+              <FileText className="w-4 h-4" />
               View Resume
             </a>
             <a 
@@ -173,14 +169,129 @@ export default function Hero() {
               target={(userInfo as any).cvUrl && (userInfo as any).cvUrl !== '#' && !(userInfo as any).cvUrl.startsWith('data:') ? "_blank" : "_self"}
               onClick={(e) => handleViewDocument(e, (userInfo as any).cvUrl)}
               rel="noopener noreferrer"
-              className="px-6 py-2.5 bg-transparent border border-white/20 text-white/70 hover:border-[#00FF41]/30 hover:text-[#00FF41] hover:bg-[#00FF41]/10 font-mono text-sm uppercase tracking-widest transition-all duration-300 backdrop-blur-sm flex items-center gap-2 group cursor-pointer"
+              className="px-6 py-3 bg-transparent border border-white/20 text-white hover:border-white/40 hover:bg-white/5 font-medium text-sm transition-all rounded-full flex items-center gap-2 group"
             >
               <Download className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
               Download CV
             </a>
           </motion.div>
         </motion.div>
+
+        {/* Right side graphic - Animated Neural Network */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="hidden lg:flex w-1/2 justify-end items-center relative h-full"
+        >
+          <NetworkVisualization />
+        </motion.div>
+
       </motion.div>
     </section>
   );
 }
+
+const NetworkVisualization = () => {
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+
+  const nodes = [
+    { id: 'ml', label: 'Machine Learning', x: 50, y: 10 },
+    { id: 'dl', label: 'Deep Learning', x: 85, y: 35 },
+    { id: 'genai', label: 'Generative AI', x: 75, y: 80 },
+    { id: 'python', label: 'Python', x: 25, y: 80 },
+    { id: 'rag', label: 'RAG', x: 15, y: 35 },
+    { id: 'agents', label: 'Agents', x: 50, y: 45 },
+  ];
+
+  const edges = [
+    { source: 'agents', target: 'ml' },
+    { source: 'agents', target: 'dl' },
+    { source: 'agents', target: 'genai' },
+    { source: 'agents', target: 'python' },
+    { source: 'agents', target: 'rag' },
+    { source: 'ml', target: 'dl' },
+    { source: 'dl', target: 'genai' },
+    { source: 'genai', target: 'python' },
+    { source: 'python', target: 'rag' },
+    { source: 'rag', target: 'ml' }
+  ];
+
+  return (
+    <div className="relative w-[500px] h-[500px]">
+      {/* Background soft glow */}
+      <motion.div 
+        animate={{ scale: [1, 1.05, 1], opacity: [0.1, 0.2, 0.1] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute inset-0 bg-blue-500/20 rounded-full blur-[100px]" 
+      />
+
+      {/* Edges */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none">
+        {edges.map((edge, i) => {
+          const source = nodes.find(n => n.id === edge.source)!;
+          const target = nodes.find(n => n.id === edge.target)!;
+          const isHovered = hoveredNode === source.id || hoveredNode === target.id;
+          
+          return (
+            <g key={i}>
+              {/* Base line */}
+              <motion.line 
+                x1={`${source.x}%`} y1={`${source.y}%`} 
+                x2={`${target.x}%`} y2={`${target.y}%`}
+                stroke="rgba(255,255,255,0.05)"
+                strokeWidth="1"
+              />
+              {/* Animated particle flow */}
+              <motion.line 
+                x1={`${source.x}%`} y1={`${source.y}%`} 
+                x2={`${target.x}%`} y2={`${target.y}%`}
+                stroke={isHovered ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.15)"}
+                strokeWidth={isHovered ? "2" : "1.5"}
+                strokeDasharray="4 20"
+                initial={{ strokeDashoffset: 0 }}
+                animate={{ strokeDashoffset: -24 }}
+                transition={{ duration: 1.5 + Math.random(), repeat: Infinity, ease: "linear" }}
+              />
+            </g>
+          );
+        })}
+      </svg>
+
+      {/* Nodes */}
+      {nodes.map((node) => (
+        <motion.div
+          key={node.id}
+          className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10"
+          style={{ left: `${node.x}%`, top: `${node.y}%` }}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 + Math.random() * 0.5 }}
+        >
+          {/* Node point */}
+          <div 
+            className="relative group cursor-pointer p-4"
+            onMouseEnter={() => setHoveredNode(node.id)}
+            onMouseLeave={() => setHoveredNode(null)}
+          >
+            {/* Pulse */}
+            <motion.div 
+              animate={{ scale: [1, 2, 1], opacity: [0.3, 0, 0.3] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute inset-0 bg-white/30 rounded-full pointer-events-none"
+            />
+            {/* Core */}
+            <div className={`w-3 h-3 rounded-full border border-white/50 transition-all duration-300 ${hoveredNode === node.id ? 'bg-white shadow-[0_0_20px_#fff] scale-150' : 'bg-[#0A0A0B]'}`} />
+            
+            {/* Label */}
+            <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 whitespace-nowrap px-3 py-1.5 rounded-lg bg-[#121214]/90 backdrop-blur-md border border-white/10 transition-all duration-300 pointer-events-none z-20
+              ${hoveredNode === node.id ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}
+            >
+              <span className="text-[10px] font-mono text-white/90 tracking-widest uppercase">{node.label}</span>
+            </div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  );
+};

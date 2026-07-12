@@ -100,12 +100,12 @@ export default function Hero() {
              style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
       </div>
 
-      <motion.div style={{ opacity }} className="relative z-10 flex flex-col lg:flex-row justify-between w-full h-full max-w-6xl mx-auto items-center pt-8 lg:pt-16">
+      <motion.div style={{ opacity }} className="relative z-10 flex flex-col md:flex-row justify-between w-full h-full max-w-6xl mx-auto items-center pt-8 lg:pt-16">
         <motion.div
            variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="relative z-10 lg:w-1/2 flex-shrink-0"
+          className="relative z-10 w-full md:w-[55%] lg:w-1/2 flex-shrink-0"
         >
           {/* Top: SYSTEM INITIALIZED */}
           <motion.div variants={itemVariants} className="flex items-center gap-3 mb-12">
@@ -182,7 +182,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="hidden lg:flex w-1/2 justify-end items-center relative h-full"
+          className="hidden md:flex w-[45%] lg:w-1/2 justify-center lg:justify-end items-center relative h-full shrink-0 -translate-y-8 lg:-translate-y-12"
         >
           <NetworkVisualization />
         </motion.div>
@@ -218,12 +218,12 @@ const NetworkVisualization = () => {
   ];
 
   return (
-    <div className="relative w-[500px] h-[500px]">
+    <div className="relative w-full max-w-[400px] aspect-square">
       {/* Background soft glow */}
       <motion.div 
-        animate={{ scale: [1, 1.05, 1], opacity: [0.1, 0.2, 0.1] }}
+        animate={{ scale: [1, 1.05, 1], opacity: [0.05, 0.1, 0.05] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-0 bg-blue-500/20 rounded-full blur-[100px]" 
+        className="absolute inset-0 bg-white/5 rounded-full blur-[50px]" 
       />
 
       {/* Edges */}
@@ -295,3 +295,4 @@ const NetworkVisualization = () => {
     </div>
   );
 };
+

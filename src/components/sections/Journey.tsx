@@ -93,10 +93,11 @@ export default function Journey() {
       transition={{ duration: 0.4 }}
       className="p-8 lg:p-16 border-b border-white/10 bg-[#0A0A0B] relative overflow-hidden"
     >
+      {/* Removed heavy scrolling parallax on the blurred element to prevent intense paint lag */}
       <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
-        <div className="absolute top-1/2 left-1/4 w-64 h-64 md:w-96 md:h-96 bg-[#00FF41] rounded-full mix-blend-screen blur-3xl 2xl:w-[600px] 2xl:h-[600px]"></div>
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 md:w-96 md:h-96 bg-white rounded-full mix-blend-screen blur-3xl 2xl:w-[600px] 2xl:h-[600px]"></div>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00FF41]/[0.01] to-transparent pointer-events-none z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#ffffff]/[0.01] to-transparent pointer-events-none z-0"></div>
 
       <div className="max-w-6xl mx-auto w-full relative z-10">
         <motion.div 
@@ -107,13 +108,14 @@ export default function Journey() {
           className="flex justify-between items-center mb-12"
         >
           <h3 className="text-sm md:text-base font-mono uppercase tracking-[0.3em] font-bold text-white flex items-center gap-4">
-            <span className="w-8 h-[1px] bg-[#00FF41]"></span>
+            <span className="w-8 h-[1px] bg-white"></span>
             Neural Pathway: AI Journey
           </h3>
-          <span className="text-[10px] font-mono opacity-40 italic text-[#00FF41] hidden sm:block border border-[#00FF41]/20 px-2 py-0.5 rounded-sm">SYS_LOG: NETWORK_TOPOLOGY</span>
+          <span className="text-[10px] font-mono opacity-40 italic text-white hidden sm:block border border-white/20 px-2 py-0.5 rounded-sm">SYS_LOG: NETWORK_TOPOLOGY</span>
         </motion.div>
 
         <div className="flex flex-col gap-8">
+          {/* Neural Network SVG Container */}
           <div 
             className="w-full overflow-hidden border border-white/5 bg-white/[0.02] rounded-xl relative cursor-crosshair group animate-in fade-in duration-1000"
           >
@@ -124,11 +126,12 @@ export default function Journey() {
             >
               <defs>
                 <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#00FF41" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#00FF41" stopOpacity="0.2" />
+                  <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="#ffffff" stopOpacity="0.2" />
                 </linearGradient>
               </defs>
 
+              {/* Edges */}
               {edges.map(edge => {
                 const isActive = activeLayer === edge.sourceLayer || activeLayer === edge.targetLayer;
                 
@@ -139,7 +142,7 @@ export default function Journey() {
                     y1={edge.y1}
                     x2={edge.x2}
                     y2={edge.y2}
-                    stroke={isActive ? "#00FF41" : "#ffffff"}
+                    stroke={isActive ? "#ffffff" : "#ffffff"}
                     strokeOpacity={isActive ? 0.5 : 0.03}
                     strokeWidth={isActive ? 2 : 1}
                     className="transition-all duration-300 ease-out"
@@ -147,6 +150,7 @@ export default function Journey() {
                 );
               })}
 
+              {/* Nodes and Hover Triggers */}
               {nodes.map((layer, layerIdx) => (
                 <g 
                   key={`layer-${layerIdx}`}
@@ -171,7 +175,7 @@ export default function Journey() {
                             cx={node.cx} 
                             cy={node.cy} 
                             r={20} 
-                            fill="#00FF41" 
+                            fill="#ffffff" 
                             opacity="0.15" 
                             className="animate-pulse"
                           />
@@ -180,7 +184,7 @@ export default function Journey() {
                           cx={node.cx}
                           cy={node.cy}
                           r={isActiveLayer ? 8 : 6}
-                          fill={isActiveLayer ? "#00FF41" : "#1a1a1a"}
+                          fill={isActiveLayer ? "#ffffff" : "#1a1a1a"}
                           stroke={isActiveLayer ? "#ffffff" : "#333333"}
                           strokeWidth={isActiveLayer ? 2 : 1}
                           className="transition-all duration-300"
@@ -189,10 +193,11 @@ export default function Journey() {
                     );
                   })}
                   
+                  {/* Layer Label on graph */}
                   <text 
                     x={(SVG_WIDTH / LAYER_SIZES.length) * (layerIdx + 0.5)} 
                     y={SVG_HEIGHT - 20} 
-                    fill={layerIdx === activeLayer ? "#00FF41" : "#444"} 
+                    fill={layerIdx === activeLayer ? "#ffffff" : "#444"} 
                     fontSize="16"
                     fontFamily="monospace"
                     textAnchor="middle"
@@ -205,11 +210,12 @@ export default function Journey() {
             </svg>
           </div>
 
+          {/* Details Panel */}
           <div 
-            className="min-h-[160px] sm:min-h-[160px] border border-[#00FF41]/20 bg-[#00FF41]/[0.03] rounded-xl p-6 sm:p-8 relative overflow-hidden flex flex-col justify-center backdrop-blur-sm animate-in fade-in slide-in-from-bottom-4 duration-500"
+            className="min-h-[160px] sm:min-h-[160px] border border-white/20 bg-white/[0.03] rounded-xl p-6 sm:p-8 relative overflow-hidden flex flex-col justify-center backdrop-blur-sm animate-in fade-in slide-in-from-bottom-4 duration-500"
           >
-            <div className="absolute top-0 left-0 w-1 h-full bg-[#00FF41] shadow-[0_0_15px_#00FF41]"></div>
-            <div className="absolute opacity-10 -right-10 -top-10 text-[120px] font-bold font-mono text-[#00FF41] select-none pointer-events-none transform -skew-x-12">
+            <div className="absolute top-0 left-0 w-1 h-full bg-white shadow-none"></div>
+            <div className="absolute opacity-10 -right-10 -top-10 text-[120px] font-bold font-mono text-white select-none pointer-events-none transform -skew-x-12">
               {activeJourney?.id}
             </div>
             
@@ -222,8 +228,8 @@ export default function Journey() {
                 transition={{ duration: 0.2, ease: "easeInOut" }}
                 className="relative z-10"
               >
-                <div className="text-[10px] sm:text-xs font-mono text-[#00FF41] mb-3 uppercase tracking-widest flex items-center gap-2">
-                  <span className="w-2 h-2 bg-[#00FF41] rounded-full animate-pulse"></span>
+                <div className="text-[10px] sm:text-xs font-mono text-white mb-3 uppercase tracking-widest flex items-center gap-2">
+                  <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
                   Node {activeJourney?.id} <span className="opacity-50 mx-2">//</span> Activation Pattern Detected
                 </div>
                 <h4 className="text-xl md:text-2xl text-white font-display font-bold mb-3 uppercase tracking-widest drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
@@ -236,7 +242,7 @@ export default function Journey() {
                 {activeJourney?.tech && activeJourney.tech.length > 0 && (
                   <div className="flex gap-2 mt-4 flex-wrap">
                     {activeJourney.tech.map((tech: string) => (
-                      <span key={tech} className="font-mono text-[9px] text-[#00FF41]/70 bg-[#00FF41]/10 border border-[#00FF41]/30 px-2 py-1 uppercase tracking-wider rounded-sm">
+                      <span key={tech} className="font-mono text-[9px] text-white/70 bg-white/10 border border-white/30 px-2 py-1 uppercase tracking-wider rounded-sm">
                         {tech}
                       </span>
                     ))}

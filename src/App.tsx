@@ -43,6 +43,7 @@ export default function App() {
         case 'c': setIsCertificationsOpen(true); break;
       }
     };
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isContactOpen]);

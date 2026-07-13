@@ -93,14 +93,14 @@ export default function Hero() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
 
   return (
-    <section ref={heroRef} className="p-8 lg:p-12 relative flex-1 flex flex-col justify-between min-h-[500px] lg:min-h-[calc(100vh-3.5rem)] overflow-hidden">
+    <section ref={heroRef} className="p-6 md:p-8 lg:p-12 relative flex-1 flex flex-col justify-center min-h-[calc(100vh-4rem)] lg:min-h-[calc(100vh-3.5rem)] overflow-hidden">
       
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
              style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
       </div>
 
-      <motion.div style={{ opacity }} className="relative z-10 flex flex-col md:flex-row justify-between w-full h-full max-w-6xl mx-auto items-center pt-8 lg:pt-16">
+      <motion.div style={{ opacity }} className="relative z-10 flex flex-col md:flex-row justify-between w-full max-w-6xl mx-auto items-center mt-0 lg:-mt-10">
         <motion.div
            variants={containerVariants}
           initial="hidden"
@@ -108,7 +108,7 @@ export default function Hero() {
           className="relative z-10 w-full md:w-[55%] lg:w-1/2 flex-shrink-0"
         >
           {/* Top: SYSTEM INITIALIZED */}
-          <motion.div variants={itemVariants} className="flex items-center gap-3 mb-12">
+          <motion.div variants={itemVariants} className="flex items-center gap-3 mb-8 md:mb-12">
             <div className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
@@ -117,43 +117,43 @@ export default function Hero() {
           </motion.div>
           
           {/* Terminal Layout with Clean Premium Typography */}
-          <motion.div variants={itemVariants} className="space-y-8 font-sans">
-            <div className="flex flex-col gap-2">
+          <motion.div variants={itemVariants} className="space-y-6 md:space-y-8 font-sans">
+            <div className="flex flex-col gap-1 md:gap-2">
               <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em]">User</span>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display tracking-tight text-white font-medium">{userInfo.name}</h1>
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display tracking-tight text-white font-medium">{userInfo.name}</h1>
             </div>
             
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1 md:gap-2">
               <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em]">Role</span>
-              <h2 className="text-2xl sm:text-3xl font-display tracking-tight text-white/80">{userInfo.role}</h2>
+              <h2 className="text-xl sm:text-3xl font-display tracking-tight text-white/80">{userInfo.role}</h2>
             </div>
             
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1 md:gap-2">
               <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em]">Status</span>
               <div className="flex items-center gap-3">
                 <div className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </div>
-                <span className="text-lg font-mono tracking-tight text-white/80 uppercase">{userInfo.status || "ONLINE"}</span>
+                <span className="text-base sm:text-lg font-mono tracking-tight text-white/80 uppercase">{userInfo.status || "ONLINE"}</span>
               </div>
             </div>
             
-            <div className="flex flex-col gap-3 max-w-md pt-4">
+            <div className="flex flex-col gap-2 md:gap-3 max-w-md pt-2 md:pt-4">
               <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em]">Mission</span>
-              <p className="text-lg font-light text-white/70 leading-relaxed font-sans">
+              <p className="text-base sm:text-lg font-light text-white/70 leading-relaxed font-sans">
                 {userInfo.intro}
                 <motion.span 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: [1, 0] }}
                   transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-                  className="inline-block w-1.5 h-5 bg-white/70 ml-2 align-middle"
+                  className="inline-block w-1.5 h-4 sm:h-5 bg-white/70 ml-2 align-middle"
                 />
               </p>
             </div>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="flex flex-wrap gap-4 mt-12">
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-3 md:gap-4 mt-8 md:mt-12">
             <a 
               href={(userInfo as any).resumeUrl && (userInfo as any).resumeUrl !== '#' ? (userInfo as any).resumeUrl : "#"} 
               target={(userInfo as any).resumeUrl && (userInfo as any).resumeUrl !== '#' && !(userInfo as any).resumeUrl.startsWith('data:') ? "_blank" : "_self"}
@@ -182,7 +182,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="hidden md:flex w-[45%] lg:w-1/2 justify-center lg:justify-end items-center relative h-full shrink-0 -translate-y-8 lg:-translate-y-12"
+          className="hidden md:flex w-[45%] lg:w-1/2 justify-center lg:justify-end items-center relative h-full shrink-0"
         >
           <NetworkVisualization />
         </motion.div>
@@ -295,4 +295,3 @@ const NetworkVisualization = () => {
     </div>
   );
 };
-

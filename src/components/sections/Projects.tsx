@@ -55,7 +55,7 @@ export default function Projects() {
           </h3>
           <span className="text-[10px] font-mono opacity-40 italic text-white hidden sm:block border border-white/20 px-2 py-0.5 rounded-sm">SORT: RECENT</span>
         </motion.div>
-        
+      
         <div 
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-8"
         >
@@ -72,10 +72,10 @@ export default function Projects() {
             <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 hidden md:block blur-xl transition-all duration-300 -z-10 rounded-xl"></div>
             
             <div 
-              className="h-full aspect-square sm:aspect-auto border border-white/10 bg-[#121214] rounded-xl group-hover:border-white/40 transition-colors duration-300 flex flex-col relative z-0"
+              className="h-full border border-white/10 bg-[#121214] rounded-xl group-hover:border-white/40 transition-colors duration-300 flex flex-col relative z-0"
             >
               <div 
-                className="h-[45%] sm:h-64 shrink-0 w-full relative overflow-hidden rounded-t-xl"
+                className="h-48 sm:h-64 shrink-0 w-full relative overflow-hidden rounded-t-xl"
               >
                 <div className="absolute inset-0 bg-white/5 z-10 group-hover:opacity-0 transition-opacity duration-300"></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-transparent to-transparent z-10"></div>

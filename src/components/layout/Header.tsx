@@ -35,7 +35,7 @@ export default function Header({ onContactClick, onCertificationsClick }: Header
       </div>
       
       {/* Desktop Navigation */}
-      <nav className="hidden xl:flex flex-1 justify-center items-center gap-4 lg:gap-8 text-[11px] font-mono text-white/50 lowercase tracking-widest">
+      <nav className="hidden flex-1 justify-center items-center gap-4 lg:gap-8 text-[11px] font-mono text-white/50 lowercase tracking-widest">
         <button onClick={() => scrollTo('hero')} className="group relative px-3 py-1.5 transition-colors hover:text-white overflow-hidden">
           <span className="relative z-10">/home</span>
           <span className="absolute bottom-0 left-0 w-full h-[1px] bg-white/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-right group-hover:origin-left"></span>
@@ -86,7 +86,7 @@ export default function Header({ onContactClick, onCertificationsClick }: Header
         
         {/* Mobile menu toggle */}
         <button 
-          className="xl:hidden flex text-white/60 hover:text-white transition-colors items-center gap-2"
+          className="flex text-white/60 hover:text-white transition-colors items-center gap-2"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -101,7 +101,7 @@ export default function Header({ onContactClick, onCertificationsClick }: Header
             animate={{ opacity: 1, y: 0, height: "auto" }}
             exit={{ opacity: 0, y: -20, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="absolute top-14 left-0 w-full bg-[#0A0A0B]/95 backdrop-blur-xl border-b border-white/10 xl:hidden flex flex-col items-center py-6 gap-6 z-50 shadow-2xl overflow-hidden"
+            className="absolute top-14 left-0 w-full bg-[#0A0A0B]/95 backdrop-blur-xl border-b border-white/10 flex flex-col items-center py-6 gap-6 z-50 shadow-2xl overflow-hidden"
           >
             <nav className="flex flex-col items-center gap-2 text-[12px] font-mono text-white/80 lowercase tracking-widest w-full">
               <button onClick={() => scrollTo('hero')} className="hover:text-white transition-colors w-full text-center py-4 border-b border-white/5">/home</button>
@@ -111,7 +111,7 @@ export default function Header({ onContactClick, onCertificationsClick }: Header
               <Link to="/admin" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition-colors w-full text-center py-4 border-b border-white/5 block">/login</Link>
             </nav>
             
-            <button onClick={() => { setMobileMenuOpen(false); onContactClick(); }} className="mt-4 px-6 py-3 border border-white/30 bg-white/5 text-white text-[10px] font-mono tracking-widest uppercase hover:bg-white/20 hover:border-white/60 transition-all rounded-sm w-3/4 max-w-xs shadow-none">
+            <button onClick={() => { setMobileMenuOpen(false); onContactClick(); }} className="sm:hidden mt-4 px-6 py-3 border border-white/30 bg-white/5 text-white text-[10px] font-mono tracking-widest uppercase hover:bg-white/20 hover:border-white/60 transition-all rounded-sm w-3/4 max-w-xs shadow-none">
               Contact
             </button>
           </motion.div>
@@ -120,3 +120,4 @@ export default function Header({ onContactClick, onCertificationsClick }: Header
     </header>
   );
 }
+
